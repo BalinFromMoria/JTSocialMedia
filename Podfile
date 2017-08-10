@@ -12,7 +12,7 @@ target 'JTSocialMedia' do
   pod 'Firebase/Storage'
   pod 'FBSDKLoginKit'
   pod 'FacebookLogin'
-
+  pod 'SwiftKeychainWrapper'
 
 
 end
