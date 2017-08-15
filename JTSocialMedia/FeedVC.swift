@@ -31,13 +31,11 @@ class FeedVC: UIViewController, UITableViewDelegate,UITableViewDataSource {
                         let post = Post(postKey: key, postData: postDict)
                         self.posts.append(post)
                         
-                        
                     }
                 }
             }
             self.tableView.reloadData()
         })
-        
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -51,13 +49,15 @@ class FeedVC: UIViewController, UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let post = posts[indexPath.row]
-        print("DAMN: \(post.caption)")
         
-        return tableView.dequeueReusableCell(withIdentifier: "PostCell") as! PostCell
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "PostCell") as? PostCell {
+            cell.configureCell(post: post)
+            return cell
+        } else {
+            return PostCell()
+        }
     }
     
-    
-
     @IBAction func signOutPushed(_ sender: Any) {
         
         let keyResult = KeychainWrapper.standard.removeObject(forKey: KEY_UID)
@@ -65,6 +65,4 @@ class FeedVC: UIViewController, UITableViewDelegate,UITableViewDataSource {
         try! Auth.auth().signOut()
         performSegue(withIdentifier: "goToSignIn", sender: nil)
     }
-
-
 }
