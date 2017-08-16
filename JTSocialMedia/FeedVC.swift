@@ -108,10 +108,31 @@ class FeedVC: UIViewController, UITableViewDelegate,UITableViewDataSource, UIIma
                     print("DAMN: Unable to upload image to Firebase storage")
                 } else {
                     print("DAMN: Successfully uploaded image to Firebase storage")
-                    let downloadUrl = metadata?.downloadURL()?.absoluteString
+                    let downloadURL = metadata?.downloadURL()?.absoluteString
+                    if let url = downloadURL {
+                        self.postToFirebase(imageUrl: url)
+                    }
+                    
                 }
             }
         }
+    }
+    
+    func postToFirebase(imageUrl: String) {
+        let post: Dictionary<String, AnyObject> = [
+        "caption": captionField.text as AnyObject,
+        "imageUrl": imageUrl as AnyObject,
+        "likes": 0 as AnyObject
+        ]
+        
+        let firebasePost = DataService.ds.REF_POSTS.childByAutoId()
+        firebasePost.setValue(post)
+        
+        captionField.text = ""
+        imageSelected = false
+        imageAdd.image = UIImage(named: "add-image")
+        
+        tableView.reloadData()
     }
     
     @IBAction func signOutPushed(_ sender: Any) {
