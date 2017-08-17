@@ -1,3 +1,4 @@
+
 //
 //  SignInVC.swift
 //  JTSocialMedia
@@ -37,7 +38,7 @@ class SignInVC: UIViewController {
         facebookLogin.logIn(withReadPermissions: ["email"], from: self) { (result, error) in
             
             if error != nil {
-                print("DAMN: Unable to authenticate with Facebook - \(error)")
+                print("DAMN: Unable to authenticate with Facebook - \(String(describing: error))")
             } else if result?.isCancelled == true {
                 print("DAMN: User cancelled Facebook authentication")
             } else {
@@ -52,7 +53,7 @@ class SignInVC: UIViewController {
         Auth.auth().signIn(with: credential) { (user, error) in
             
             if error != nil {
-                print("DAMN: Unable to authenticate with Firebase - \(error)")
+                print("DAMN: Unable to authenticate with Firebase - \(String(describing: error))")
             } else {
                 print("DAMN: Successfully authenticated with Firebase")
                 if let user = user {
@@ -76,7 +77,7 @@ class SignInVC: UIViewController {
                 } else {
                     Auth.auth().createUser(withEmail: email, password: pwd) { (user, error) in
                         if error != nil {
-                            print("DAMN: Unable to authenticate with Firebase using email - \(error)")
+                            print("DAMN: Unable to authenticate with Firebase using email - \(String(describing: error))")
                         } else {
                             print("DAMN: Sucessfully authenticated with Firebase")
                             if let user = user {
