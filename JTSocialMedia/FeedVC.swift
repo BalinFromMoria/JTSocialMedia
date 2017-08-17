@@ -112,7 +112,6 @@ class FeedVC: UIViewController, UITableViewDelegate,UITableViewDataSource, UIIma
                     if let url = downloadURL {
                         self.postToFirebase(imageUrl: url)
                     }
-                    
                 }
             }
         }
